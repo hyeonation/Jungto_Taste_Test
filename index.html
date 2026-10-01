@@ -1,3 +1,4 @@
+<!-- STREAMING_CHUNK: Setting up HTML boilerplate, Tailwind CSS, FontAwesome, and custom font styling... -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,9 +16,11 @@
 </head>
 <body class="bg-amber-50/60 min-h-screen flex items-center justify-center p-4">
 
-  <div class="max-w-md w-full bg-white rounded-3xl shadow-xl overflow-hidden border border-amber-100 min-h-[600px] flex flex-col justify-between p-6 transition-all duration-300">
+  <!-- STREAMING_CHUNK: Creating the main container layout... -->
+  <div class="max-w-md w-full bg-white rounded-3xl shadow-xl overflow-hidden border border-amber-100 min-h-[620px] flex flex-col justify-between p-6 transition-all duration-300 relative">
     
     <!-- 1. 시작 화면 -->
+    <!-- STREAMING_CHUNK: Rendering the start screen layout... -->
     <div id="start-screen" class="my-auto text-center space-y-6">
       <div class="inline-block p-4 bg-emerald-100 text-emerald-700 rounded-full text-4xl mb-2">
         🌿
@@ -38,19 +41,24 @@
     </div>
 
     <!-- 2. 질문 화면 -->
+    <!-- STREAMING_CHUNK: Rendering the quiz screen with top navigation and progress bar... -->
     <div id="quiz-screen" class="hidden flex-col justify-between h-full space-y-6 my-auto">
       <div>
+        <!-- 상단 내비게이션 (뒤로가기 버튼 + 문항 번호) -->
+        <div class="flex items-center justify-between mb-4">
+          <button id="prev-btn" onclick="prevQuestion()" class="flex items-center text-sm font-bold text-gray-1000 
+          hover:text-emerald-700 transition px-2 py-1 -ml-2 rounded-lg hover:bg-gray-100 invisible">
+            <i class="fa-solid fa-chevron-left mr-1"></i> 이전 질문
+          </button>
+          <span id="question-count" class="text-xs font-bold text-emerald-700">1/5</span>
+        </div>
+
         <!-- 진행 바 -->
         <div class="w-full bg-gray-100 h-2.5 rounded-full mb-6 overflow-hidden">
           <div id="progress-bar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
         </div>
 
-        <div class="flex items-center justify-between text-xs font-bold text-emerald-700 mb-2">
-          <span id="question-number">Q1.</span>
-          <span id="question-count">1/5</span>
-        </div>
-
-        <h2 id="question-text" class="text-lg font-bold text-gray-800 leading-snug mb-6">
+        <h2 id="question-text" class="text-lg font-bold text-gray-800 leading-snug mb-6 whitespace-pre-line">
           질문 내용
         </h2>
 
@@ -63,6 +71,7 @@
     </div>
 
     <!-- 3. 결과 화면 -->
+    <!-- STREAMING_CHUNK: Rendering the result screen view... -->
     <div id="result-screen" class="hidden my-auto text-center space-y-5">
       <div>
         <div id="result-icon" class="text-5xl mb-2">🔮</div>
@@ -72,7 +81,7 @@
       </div>
 
       <div class="bg-amber-50/70 p-4 rounded-2xl text-left border border-amber-100 space-y-3">
-        <p id="result-desc" class="text-sm text-gray-700 leading-relaxed"></p>
+        <p id="result-desc" class="text-sm text-gray-700 leading-relaxed whitespace-pre-line"></p>
         
         <div class="pt-2 border-t border-amber-200/60">
           <span class="text-xs font-bold text-gray-500 block mb-1">추천 키워드</span>
@@ -89,6 +98,7 @@
 
   </div>
 
+  <!-- STREAMING_CHUNK: Defining data structure, test questions, and result descriptions... -->
   <script>
     const questions = [
       {
@@ -169,25 +179,40 @@
       }
     };
 
+    /* STREAMING_CHUNK: Initializing state variables and history management... */
     let currentQuestion = 0;
     let scores = { TEMPLE: 0, HAPPY: 0, UNIV: 0, AWAKENING: 0 };
+    let history = []; // 선택 내역을 저장하는 배열
 
     function startTest() {
+      currentQuestion = 0;
+      scores = { TEMPLE: 0, HAPPY: 0, UNIV: 0, AWAKENING: 0 };
+      history = [];
       document.getElementById('start-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('hidden');
       document.getElementById('quiz-screen').classList.add('flex');
       showQuestion();
     }
 
+    /* STREAMING_CHUNK: Implementing question rendering and back button visibility logic... */
     function showQuestion() {
       const q = questions[currentQuestion];
-      document.getElementById('question-number').innerText = `Q${currentQuestion + 1}.`;
       document.getElementById('question-count').innerText = `${currentQuestion + 1}/${questions.length}`;
       document.getElementById('question-text').innerText = q.q;
 
+      // Q1(currentQuestion === 0)일 때는 뒤로가기 버튼 숨김, Q2부터 표시
+      const prevBtn = document.getElementById('prev-btn');
+      if (currentQuestion > 0) {
+        prevBtn.classList.remove('invisible');
+      } else {
+        prevBtn.classList.add('invisible');
+      }
+
+      // 프로그레스 바 업데이트
       const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
       document.getElementById('progress-bar').style.width = `${progressPercent}%`;
 
+      // 선택지 버튼 동적 생성
       const optionsContainer = document.getElementById('options-container');
       optionsContainer.innerHTML = '';
 
@@ -203,8 +228,10 @@
       });
     }
 
+    /* STREAMING_CHUNK: Handling option selection and history tracking... */
     function selectOption(type) {
       scores[type]++;
+      history.push(type); // 선택했던 답변 히스토리에 기록
       currentQuestion++;
 
       if (currentQuestion < questions.length) {
@@ -214,6 +241,17 @@
       }
     }
 
+    /* STREAMING_CHUNK: Implementing back button logic to undo score and step back... */
+    function prevQuestion() {
+      if (currentQuestion > 0 && history.length > 0) {
+        const lastSelectedType = history.pop(); // 직전에 선택했던 답변 꺼내기
+        scores[lastSelectedType]--; // 점수 원복
+        currentQuestion--; // 이전 질문으로 이동
+        showQuestion();
+      }
+    }
+
+    /* STREAMING_CHUNK: Calculating result and rendering summary view... */
     function showResult() {
       document.getElementById('quiz-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('flex');
@@ -246,9 +284,25 @@
     function restartTest() {
       currentQuestion = 0;
       scores = { TEMPLE: 0, HAPPY: 0, UNIV: 0, AWAKENING: 0 };
+      history = [];
       document.getElementById('result-screen').classList.add('hidden');
       document.getElementById('start-screen').classList.remove('hidden');
     }
   </script>
 </body>
 </html>
+
+<!-- 
+
+```eof
+
+### 🌟 추가된 기능
+1. **뒤로가기 버튼 (`이전 질문`)**:
+   - Q2 이상부터 상단에 **`< 이전 질문`** 버튼이 표시됩니다.
+   - 클릭 시 직전에 고른 답변 점수를 차감하고 이전 질문 상태로 되돌아갑니다.
+   - 첫 번째 질문(Q1)에서는 버튼이 보이지 않습니다.
+2. **상태 관리 (`history` 배열)**:
+   - 사용자가 문항을 넘어가며 눌렀던 옵션 유형을 차곡차곡 기록해두어, 뒤로 가더라도 정확한 이전 상태로 원복되도록 제작되었습니다.
+3. **진행률 및 버튼 반응형 업데이트**:
+   - 이전 질문으로 되돌아갈 때 진행률 바(Progress Bar)도 함께 업데이트됩니다.
+-->
