@@ -40,14 +40,13 @@
       </button>
     </div>
 
-    <!-- 2. 질문 화면 -->
-    <!-- STREAMING_CHUNK: Rendering the quiz screen with top navigation and progress bar... -->
+<!-- 2. 질문 화면 -->
     <div id="quiz-screen" class="hidden flex-col justify-between h-full space-y-6 my-auto">
       <div>
         <!-- 상단 내비게이션 (뒤로가기 버튼 + 문항 번호) -->
         <div class="flex items-center justify-between mb-4">
-          <button id="prev-btn" onclick="prevQuestion()" class="flex items-center text-sm font-bold text-gray-1000 
-          hover:text-emerald-700 transition px-2 py-1 -ml-2 rounded-lg hover:bg-gray-100 invisible">
+          <!-- 💥 HTML 수정: invisible -> hidden -->
+          <button id="prev-btn" onclick="prevQuestion()" class="flex items-center text-xs font-bold text-gray-500 hover:text-emerald-700 transition px-2 py-1 -ml-2 rounded-lg hover:bg-gray-100 hidden">
             <i class="fa-solid fa-chevron-left mr-1"></i> 이전 질문
           </button>
           <span id="question-count" class="text-xs font-bold text-emerald-700">1/5</span>
@@ -195,17 +194,17 @@
     }
 
     /* STREAMING_CHUNK: Implementing question rendering and back button visibility logic... */
-    function showQuestion() {
+function showQuestion() {
       const q = questions[currentQuestion];
       document.getElementById('question-count').innerText = `${currentQuestion + 1}/${questions.length}`;
       document.getElementById('question-text').innerText = q.q;
 
-      // Q1(currentQuestion === 0)일 때는 뒤로가기 버튼 숨김, Q2부터 표시
+      // 💥 JS 수정: hidden 클래스를 이용해 display 상태 제어
       const prevBtn = document.getElementById('prev-btn');
       if (currentQuestion > 0) {
-        prevBtn.classList.remove('invisible');
+        prevBtn.classList.remove('hidden'); // 첫 번째 문항이 아니면 보여줌 (display: flex)
       } else {
-        prevBtn.classList.add('invisible');
+        prevBtn.classList.add('hidden'); // 첫 번째 문항이면 완전히 숨김 (display: none)
       }
 
       // 프로그레스 바 업데이트
