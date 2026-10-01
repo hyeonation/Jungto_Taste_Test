@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>나에게 맞는 정토회 콘텐츠 찾기</title>
+  <title>청년 페스타에서 발견한 나</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -14,82 +13,78 @@
     }
   </style>
 </head>
+<body class="bg-amber-50/60 min-h-screen flex items-center justify-center p-4">
 
-<body class="bg-amber-50/50 min-h-screen flex items-center justify-center p-4">
-
-  <div
-    class="max-w-md w-full bg-white rounded-3xl shadow-xl overflow-hidden border border-amber-100 min-h-[550px] flex flex-col justify-between p-6 transition-all duration-300">
-
-    <!-- Start Screen -->
+  <div class="max-w-md w-full bg-white rounded-3xl shadow-xl overflow-hidden border border-amber-100 min-h-[600px] flex flex-col justify-between p-6 transition-all duration-300">
+    
+    <!-- 1. 시작 화면 -->
     <div id="start-screen" class="my-auto text-center space-y-6">
-      <div class="inline-block p-4 bg-amber-100 rounded-full text-amber-800 text-3xl mb-2">
-        <i class="fa-solid fa-spa"></i>
+      <div class="inline-block p-4 bg-emerald-100 text-emerald-700 rounded-full text-4xl mb-2">
+        🌿
       </div>
       <div>
-        <span class="text-xs font-bold tracking-wider text-amber-700 uppercase bg-amber-100 px-3 py-1 rounded-full">
-          정토회 맞춤 가이드</span>
-        <h1 class="text-2xl font-black text-gray-800 mt-3 leading-tight">
-          나에게 꼭 맞는<br>정토회 콘텐츠는?
+        <span class="text-xs font-bold tracking-wider text-emerald-800 uppercase bg-emerald-100 px-3 py-1 rounded-full">심리 테스트</span>
+        <h1 class="text-2xl font-black text-gray-800 mt-4 leading-tight">
+          청년 페스타에서<br>발견한 나
         </h1>
         <p class="text-sm text-gray-600 mt-3 leading-relaxed">
-          마음의 평화와 행복을 찾고 싶으신가요?<br>몇 가지 간단한 질문으로 당신에게 딱 맞는<br>정토회 프로그램을 추천해 드립니다!
+          나는 지금 어떤 경험이 필요할까?<br>지금의 나와 가장 가까운 답을 골라보세요.
         </p>
       </div>
 
-      <button onclick="startTest()"
-        class="w-full py-4 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-2xl shadow-lg shadow-amber-600/30 transition transform active:scale-95 text-lg">
+      <button onclick="startTest()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-600/30 transition transform active:scale-95 text-lg">
         테스트 시작하기
       </button>
     </div>
 
-    <!-- Quiz Screen -->
+    <!-- 2. 질문 화면 -->
     <div id="quiz-screen" class="hidden flex-col justify-between h-full space-y-6 my-auto">
       <div>
-        <!-- Progress Bar -->
-        <div class="w-full bg-gray-100 h-2 rounded-full mb-6 overflow-hidden">
-          <div id="progress-bar" class="bg-amber-500 h-full w-0 transition-all duration-300"></div>
+        <!-- 진행 바 -->
+        <div class="w-full bg-gray-100 h-2.5 rounded-full mb-6 overflow-hidden">
+          <div id="progress-bar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
         </div>
 
-        <div class="flex items-center justify-between text-xs font-bold text-amber-700 mb-2">
+        <div class="flex items-center justify-between text-xs font-bold text-emerald-700 mb-2">
           <span id="question-number">Q1.</span>
-          <span id="question-count">1/4</span>
+          <span id="question-count">1/5</span>
         </div>
 
         <h2 id="question-text" class="text-lg font-bold text-gray-800 leading-snug mb-6">
-          질문 텍스트
+          질문 내용
         </h2>
 
         <div id="options-container" class="space-y-3">
-          <!-- Option buttons inserted here dynamically -->
+          <!-- 선택지 버튼 동적 생성 -->
         </div>
       </div>
 
-      <p class="text-xs text-center text-gray-400">자신에게 가장 어울리는 선택지를 골라주세요.</p>
+      <p class="text-xs text-center text-gray-400">정답은 없어요. 끌리는 답 하나를 골라주세요.</p>
     </div>
 
-    <!-- Result Screen -->
-    <div id="result-screen" class="hidden my-auto text-center space-y-6">
-      <div class="inline-block p-4 rounded-full text-4xl mb-1" id="result-icon-bg">
-        <i id="result-icon" class="fa-solid"></i>
-      </div>
-
+    <!-- 3. 결과 화면 -->
+    <div id="result-screen" class="hidden my-auto text-center space-y-5">
       <div>
-        <span id="result-tag" class="text-xs font-bold px-3 py-1 rounded-full"></span>
+        <div id="result-icon" class="text-5xl mb-2">🔮</div>
+        <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">나에게 필요한 경험</span>
         <h2 id="result-title" class="text-2xl font-black text-gray-800 mt-3"></h2>
-        <p id="result-subtitle" class="text-sm font-semibold text-amber-700 mt-1"></p>
+        <p id="result-subtitle" class="text-base font-bold text-emerald-700 mt-1"></p>
       </div>
 
-      <div class="bg-gray-50 p-4 rounded-2xl text-left border border-gray-100 space-y-2">
+      <div class="bg-amber-50/70 p-4 rounded-2xl text-left border border-amber-100 space-y-3">
         <p id="result-desc" class="text-sm text-gray-700 leading-relaxed"></p>
-        <div id="result-features" class="pt-2 border-t border-gray-200 text-xs text-gray-600 space-y-1"></div>
+        
+        <div class="pt-2 border-t border-amber-200/60">
+          <span class="text-xs font-bold text-gray-500 block mb-1">추천 키워드</span>
+          <div id="result-keywords" class="flex flex-wrap gap-1.5">
+            <!-- 키워드 태그 들어가는 곳 -->
+          </div>
+        </div>
       </div>
 
-      <div class="space-y-2 pt-2">
-        <button onclick="restartTest()"
-          class="w-full py-3.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-md transition text-sm">
-          다시 테스트하기
-        </button>
-      </div>
+      <button onclick="restartTest()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition text-sm">
+        다시 테스트하기
+      </button>
     </div>
 
   </div>
@@ -97,86 +92,85 @@
   <script>
     const questions = [
       {
-        q: "요즘 내 마음의 고민이나 문제에 대해 느끼는 바는?",
+        q: "Q1. 오늘은 청년 페스타 첫날!\n나의 행동은?",
         options: [
-          { text: "복잡한 생각 말고, 내 마음을 깊이 들여다보고 한 번에 확실한 깨달음을 얻고 싶어!", type: "AWAKENING" },
-          { text: "부처님의 가르침과 원리를 차근차근 체계적으로 배워서 마음의 이치를 알고 싶어.", type: "BUDDHA_COLLEGE" },
-          { text: "종교적인 건 조금 부담스럽고, 일상에서 바로 쓸 수 있는 실용적인 행복 방법을 찾고 싶어.", type: "HAPPY_SCHOOL" },
+          { text: "① 오, 설렌다! 일단 이것저것 돌아다녀보자.", type: "TEMPLE" },
+          { text: "② 일단 팜플렛부터! 전체 프로그램을 파악하고 시작한다.", type: "UNIV" },
+          { text: "③ 사람들이 뭐 하는지 천천히 구경한다. 분위기를 먼저 느껴본다.", type: "HAPPY" },
+          { text: "④ 오늘 여기 온 김에 평소 안 해보던 것까지 제대로 해보고 싶다.", type: "AWAKENING" }
         ]
       },
       {
-        q: "내가 선호하는 공부 및 체험 방식은?",
+        q: "Q2. 걷다가 법륜스님과 마주쳤다. 나의 반응은?",
         options: [
-          { text: "부담 없이 편안하게 사람들과 이야기 나누며 행복에 대해 탐구하는 가벼운 모임!", type: "HAPPY_SCHOOL" },
-          { text: "주 일정에 맞춰 정기적으로 수업을 듣고 수행을 이어가는 체계적인 교육 과정!", type: "BUDDHA_COLLEGE" },
-          { text: "며칠 집중해서 푹 몰입하며 내 삶과 마음을 전면적으로 돌아보는 명상/수련 프로그램!", type: "AWAKENING" },
+          { text: "① “스님! 안녕하세요!” 일단 반갑게 인사한다.", type: "HAPPY" },
+          { text: "② “어… 어디서 뵌 분 같은데?” 일단 지나간다.", type: "TEMPLE" },
+          { text: "③ “스님, 궁금한 게 있는데요!” 평소 궁금했던 걸 물어본다.", type: "UNIV" },
+          { text: "④ “나한테도 궁금한 게 하나 있는데…” 괜히 내 삶을 돌아보게 된다.", type: "AWAKENING" }
         ]
       },
       {
-        q: "정토회에 대해 가장 기대하는 것이 있다면?",
+        q: "Q3. 모르는 사람이 친근하게 말을 건다!",
         options: [
-          { text: "불교적 세계관과 지혜를 깊이 이해하고 지속적으로 정진하는 삶", type: "BUDDHA_COLLEGE" },
-          { text: "삶의 근본적인 괴로움과 굴레에서 단박에 벗어나는 강렬한 경험", type: "AWAKENING" },
-          { text: "일상에서의 스트레스를 해소하고 법륜스님의 지혜를 삶에 적용하기", type: "HAPPY_SCHOOL" },
+          { text: "① “누구세요?” 모르는 사람은 일단 경계한다.", type: "TEMPLE" },
+          { text: "② “아… 하하, 안녕하세요.” 어색하지만 일단 받아준다.", type: "HAPPY" },
+          { text: "③ “안녕하세요!” 나도 자연스럽게 말을 건다.", type: "UNIV" },
+          { text: "④ 우연한 만남이 인연이 될지도?! 열린마음으로 일단 이야기를 들어본다.", type: "AWAKENING" }
         ]
       },
       {
-        q: "프로그램에 참여할 수 있는 나의 여유 시간은?",
+        q: "Q4. 누군가 묻는다.\n“당신에게 행복이란 무엇인가요?”",
         options: [
-          { text: "몇 달 동안 주 1~2회 정도 규칙적으로 시간을 내어 꾸준히 공부할 수 있어.", type: "BUDDHA_COLLEGE" },
-          { text: "긴 기간은 부담스럽고, 짧고 가볍게 경험해보는 것이 좋아.", type: "HAPPY_SCHOOL" },
-          { text: "며칠간 일상을 잠시 내려놓고 온전히 나와 만나는 시간을 내고 싶어.", type: "AWAKENING" },
+          { text: "① “재밌는 거 하고 좋아하는 사람이랑 놀면 행복하지~”", type: "TEMPLE" },
+          { text: "② “잠깐만… 행복이 뭘까?” 쉽게 대답하기 어렵다.", type: "AWAKENING" },
+          { text: "③ “행복하다고 느낀지 오래된 거 같아..”", type: "HAPPY" },
+          { text: "④ “내가 어떻게 살아야 행복할 수 있는지 알고 싶어.”", type: "UNIV" }
+        ]
+      },
+      {
+        q: "Q5. 이제 집에 돌아갈 시간이다.\n오늘 하루를 떠올리며 가장 가까운 생각은?",
+        options: [
+          { text: "① “오늘 재밌었다! 다음에 또 와야지.”", type: "TEMPLE" },
+          { text: "② “생각보다 궁금한 게 많네. 좀 더 알아보고 싶다.”", type: "HAPPY" },
+          { text: "③ “잠깐 멈춰서 나를 돌아볼 수 있어서 좋았다.”", type: "UNIV" },
+          { text: "④ “이상하다. 오늘 내가 어떻게 살고 싶은지 생각하게 됐다.”", type: "AWAKENING" }
         ]
       }
     ];
 
     const results = {
+      TEMPLE: {
+        title: "☕ 도심 속 절캉스",
+        subtitle: "“일단 잠깐 멈춰볼래?”",
+        icon: "☕",
+        desc: "새로운 것을 경험해보고 싶지만 너무 무거운 시작은 부담스러운 당신.\n잠시 일상을 내려놓고, 내 마음을 가볍게 들여다보는 시간을 가져보세요.\n도심 속 절캉스는 반나절 동안 명상하고 내 마음을 살펴보면서, 잠시 일상의 속도를 늦춰볼 수 있어요.",
+        keywords: ["쉼", "경험", "명상", "마음 살피기"]
+      },
+      HAPPY: {
+        title: "🌱 행복학교",
+        subtitle: "“조금 더 행복하게 살아볼래?”",
+        icon: "🌱",
+        desc: "거창한 변화보다는 지금의 일상과 내 마음을 조금씩 바꿔보고 싶은 당신.\n내가 행복하지 않은 이유를 돌아보고, 일상에서 행복을 연습해보세요.\n행복학교는 1주일에 1시간, 4주 프로그램으로 온라인에서 법륜스님의 즉문즉설을 보고 참가자들과 나누며 행복을 배우고 연습하는 과정으로 소개되고 있어요.",
+        keywords: ["행복", "관계", "일상", "변화"]
+      },
+      UNIV: {
+        title: "📖 불교대학",
+        subtitle: "“이번에는 제대로 알아볼래?”",
+        icon: "📖",
+        desc: "그냥 좋은 말을 듣는 것보다 ‘왜 그런지’ 알고 싶은 당신.\n삶과 마음에 대해 차근차근 배우고, 배운 것을 일상에서 직접 적용해보고 싶다면.\n정토불교대학은 5개월 동안 법문, 마음나누기, 수행연습 등을 통해 불교의 가르침을 일상에 적용해보는 과정이에요.",
+        keywords: ["배움", "이해", "질문", "수행"]
+      },
       AWAKENING: {
-        title: "깨달음의 장",
-        subtitle: "나는 단박에 깨달음으로 간다!",
-        tag: "집중 수련 / 자기 발견",
-        colorBg: "bg-amber-100",
-        colorText: "text-amber-800",
-        tagBg: "bg-amber-100 text-amber-800",
-        icon: "fa-door-open",
-        desc: "4박 5일간 온전히 나와 만나는 집중 수련입니다. 관념적인 지식이 아닌, 직접적인 체험을 통해 내 마음의 작동 원리를 파악하고 괴로움의 뿌리를 단번에 내려놓는 경험을 선사합니다.",
-        features: [
-          "• 대상: 내 삶의 괴로움을 근본적으로 해결하고 싶은 분",
-          "• 특징: 4박 5일간 오롯이 자신에게 몰입하는 수련 프로그램"
-        ]
-      },
-      BUDDHA_COLLEGE: {
-        title: "정토불교대학",
-        subtitle: "나는 차근차근 알아가고 싶어!",
-        tag: "체계적 학습 / 마음공부",
-        colorBg: "bg-emerald-100",
-        colorText: "text-emerald-800",
-        tagBg: "bg-emerald-100 text-emerald-800",
-        icon: "fa-graduation-cap",
-        desc: "법륜스님의 구체적이고 실용적인 법문을 통해 불교의 핵심 지혜를 기초부터 차근차근 배우는 과정입니다. 일상 속 실천 연습을 통해 내 삶을 스스로 변화시키는 법을 체득합니다.",
-        features: [
-          "• 대상: 불교의 지혜를 체계적으로 배우고 삶에 적용하고 싶은 분",
-          "• 특징: 온라인으로 부담 없이 정기적으로 참여하는 마음 공부 과정"
-        ]
-      },
-      HAPPY_SCHOOL: {
-        title: "행복학교",
-        subtitle: "종교색을 쏙 빼고 행복에 집중해 탐구한다!",
-        tag: "일상 행복 / 부담 없는 첫걸음",
-        colorBg: "bg-sky-100",
-        colorText: "text-sky-800",
-        tagBg: "bg-sky-100 text-sky-800",
-        icon: "fa-face-smile",
-        desc: "종교적 색채 없이, 누구나 쉽게 실생활에서 행복해질 수 있는 방법을 탐구하는 시민 교양 프로그램입니다. 소그룹 나누기를 통해 서로의 경험을 나누며 마음이 한결 가벼워짐을 느낄 수 있습니다.",
-        features: [
-          "• 대상: 종교는 부담스럽지만 마음의 평안과 행복을 얻고 싶은 분",
-          "• 특징: 부담 없는 기간, 대화와 나눔 중심의 가벼운 프로그램"
-        ]
+        title: "🔥 깨달음의 장",
+        subtitle: "“나를 한번 제대로 만나볼래?”",
+        icon: "🔥",
+        desc: "평소의 나를 잠시 내려놓고 내가 어떤 생각과 욕망을 가지고 살아가는지 깊이 돌아보고 싶은 당신.\n정토수련원의 4박 5일 수련 프로그램으로 안내되고 있으며, 평생 한 번 참여할 수 있는 프로그램이에요.\n조금 더 깊은 자기성찰의 시간을 가져보세요.",
+        keywords: ["성찰", "내려놓기", "나", "삶"]
       }
     };
 
     let currentQuestion = 0;
-    let scores = { AWAKENING: 0, BUDDHA_COLLEGE: 0, HAPPY_SCHOOL: 0 };
+    let scores = { TEMPLE: 0, HAPPY: 0, UNIV: 0, AWAKENING: 0 };
 
     function startTest() {
       document.getElementById('start-screen').classList.add('hidden');
@@ -199,10 +193,10 @@
 
       q.options.forEach(opt => {
         const btn = document.createElement('button');
-        btn.className = "w-full text-left p-4 rounded-xl border border-gray-200 hover:border-amber-500 hover:bg-amber-50/50 transition duration-150 text-sm font-medium text-gray-700 flex items-center justify-between group active:scale-[0.99]";
+        btn.className = "w-full text-left p-4 rounded-xl border border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition duration-150 text-sm font-medium text-gray-700 flex items-center justify-between group active:scale-[0.99]";
         btn.innerHTML = `
           <span>${opt.text}</span>
-          <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-amber-500 text-xs"></i>
+          <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-emerald-500 text-xs shrink-0 ml-2"></i>
         `;
         btn.onclick = () => selectOption(opt.type);
         optionsContainer.appendChild(btn);
@@ -225,8 +219,8 @@
       document.getElementById('quiz-screen').classList.remove('flex');
       document.getElementById('result-screen').classList.remove('hidden');
 
-      // Calculate top result
-      let highestType = 'HAPPY_SCHOOL';
+      // 최고 점수 유형 계산
+      let highestType = 'TEMPLE';
       let maxScore = -1;
 
       for (const [type, score] of Object.entries(scores)) {
@@ -238,35 +232,23 @@
 
       const res = results[highestType];
 
-      const iconBg = document.getElementById('result-icon-bg');
-      iconBg.className = `inline-block p-4 rounded-full text-4xl mb-1 ${res.colorBg} ${res.colorText}`;
-
-      const icon = document.getElementById('result-icon');
-      icon.className = `fa-solid ${res.icon}`;
-
-      const tag = document.getElementById('result-tag');
-      tag.className = `text-xs font-bold px-3 py-1 rounded-full ${res.tagBg}`;
-      tag.innerText = res.tag;
-
+      document.getElementById('result-icon').innerText = res.icon;
       document.getElementById('result-title').innerText = res.title;
       document.getElementById('result-subtitle').innerText = res.subtitle;
       document.getElementById('result-desc').innerText = res.desc;
 
-      const featuresContainer = document.getElementById('result-features');
-      featuresContainer.innerHTML = res.features.map(f => `<p>${f}</p>`).join('');
+      const keywordsContainer = document.getElementById('result-keywords');
+      keywordsContainer.innerHTML = res.keywords.map(kw => 
+        `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-md font-medium"># ${kw}</span>`
+      ).join('');
     }
 
     function restartTest() {
       currentQuestion = 0;
-      scores = { AWAKENING: 0, BUDDHA_COLLEGE: 0, HAPPY_SCHOOL: 0 };
+      scores = { TEMPLE: 0, HAPPY: 0, UNIV: 0, AWAKENING: 0 };
       document.getElementById('result-screen').classList.add('hidden');
       document.getElementById('start-screen').classList.remove('hidden');
     }
   </script>
 </body>
-
 </html>
-<!-- ```eof
-
-요청해주신 유형별 결과(**깨달음의 장, 불교대학, 행복학교**)가 나오도록 만든 4문항 진단 테스트입니다. 위 파일에는 질문 진행 상황과 결과 도출 기능이 포함되어 있습니다.
--->
